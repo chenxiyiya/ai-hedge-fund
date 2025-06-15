@@ -743,7 +743,7 @@ if __name__ == "__main__":
         if not model_choice:
             print("\n\nInterrupt received. Exiting...")
             sys.exit(0)
-        
+
         model_name, model_provider = model_choice
 
         model_info = get_model_info(model_name, model_provider)
