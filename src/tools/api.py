@@ -1,6 +1,9 @@
 import datetime
 import os
-import pandas as pd
+try:
+    import pandas as pd
+except ImportError:  # pragma: no cover - optional dependency
+    pd = None
 import requests
 
 from src.data.cache import get_cache
@@ -278,8 +281,11 @@ def get_market_cap(
     return market_cap
 
 
-def prices_to_df(prices: list[Price]) -> pd.DataFrame:
+def prices_to_df(prices: list[Price]) -> 'pd.DataFrame':
     """Convert prices to a DataFrame."""
+    if pd is None:
+        raise ImportError("pandas is required for prices_to_df")
+
     df = pd.DataFrame([p.model_dump() for p in prices])
     df["Date"] = pd.to_datetime(df["time"])
     df.set_index("Date", inplace=True)
@@ -291,6 +297,9 @@ def prices_to_df(prices: list[Price]) -> pd.DataFrame:
 
 
 # Update the get_price_data function to use the new functions
-def get_price_data(ticker: str, start_date: str, end_date: str) -> pd.DataFrame:
+def get_price_data(ticker: str, start_date: str, end_date: str) -> 'pd.DataFrame':
+    if pd is None:
+        raise ImportError("pandas is required for get_price_data")
+
     prices = get_prices(ticker, start_date, end_date)
     return prices_to_df(prices)

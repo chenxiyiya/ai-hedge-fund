@@ -251,6 +251,13 @@ poetry run python src/backtester.py --ticker AAPL,MSFT,NVDA --ollama
 run.bat --ticker AAPL,MSFT,NVDA --ollama backtest
 ```
 
+### Running the Value Screener
+
+```bash
+poetry install  # install dependencies, including pandas
+poetry run python src/value_screener.py --tickers AAPL,MSFT,NVDA
+```
+
 ## Contributing
 
 1. Fork the repository
